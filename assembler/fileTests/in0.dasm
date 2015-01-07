@@ -1,0 +1,8 @@
+:aBegin/cAddr: 0 0+12
+sub r1 r2 r3/4 1 2 3
+/
+:basdf/cAddr: 0 4+12=16=10
+jmp :basdf r4 r5/62,3E 0 10 4 5
+
+hlt/64,40
+
