@@ -10,6 +10,8 @@
 #ifndef TESTS_H_
 #define TESTS_H_
 
+#include <stdbool.h>
+
 int runTests(bool lineTests, bool fileTests,
 		int logLevel);
 void runLineTests(int logLevel);

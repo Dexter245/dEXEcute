@@ -64,7 +64,7 @@ void runLineTests(int logLevel){
 		"hlt\n", 				{16*4, 0, 0, 0, 0, 0}//25
 	};
 
-	unsigned char *input = malloc(64);
+	char *input = malloc(64);
 	unsigned char *output = malloc(6);
 	int outputLen = 6;
 	unsigned char *outputPtr = output;
@@ -72,7 +72,7 @@ void runLineTests(int logLevel){
 	int j = 0;
 	for(int testNum = 0; testNum < numLineTests; ++testNum){
 
-		strcpy(input, lineTests[j]);
+		strcpy(input, (char*) lineTests[j]);
 		outputPtr = output;
 		assembleLine(input, output, &outputPtr, 0, logLevel);
 
@@ -184,8 +184,6 @@ void runFileTests(int logLevel){
 	int numFileTests = 1;
 	int numFileTestsPassed = 0;
 	int numFileTestsFailed = 0;
-	const int arrSize = numFileTests*2;
-
 
 	for(int i = 0; i < numFileTests; i++){
 

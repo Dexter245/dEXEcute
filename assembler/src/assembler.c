@@ -21,7 +21,7 @@ int assembleLine(char *line, unsigned char *output,
 		unsigned char **outputPtr, int lineNum, int logLevel){
 
 	//"remove" comment if existing
-	unsigned char *commentPos = strchr(line, '/');
+	unsigned char *commentPos = (unsigned char *) strchr(line, '/');
 	if(commentPos != 0){
 		*commentPos = '\0';
 	}
@@ -83,9 +83,9 @@ int assembleLine(char *line, unsigned char *output,
 	bool isArg0Lit = isArgLit(arg0);
 	bool isArg1Lit = isArgLit(arg1);
 	if(isArg0Lit)
-		opcode |= 0b00000010;
+		opcode |= 2;
 	if(isArg1Lit)
-		opcode |= 0b00000001;
+		opcode |= 1;
 
 	**outputPtr = opcode;
 	++(*outputPtr);
@@ -106,7 +106,8 @@ int assembleLine(char *line, unsigned char *output,
 					jumpAddrInsLocs[jumpAddrInsLocsIndex][0],
 					jumpAddrInsLocs[jumpAddrInsLocsIndex][1]);
 			}
-			strcpy(jumpAddrInsLocs[jumpAddrInsLocsIndex+1], arg0);
+			strcpy((char*) jumpAddrInsLocs[jumpAddrInsLocsIndex+1],
+					arg0);
 			jumpAddrInsLocsIndex += 2;
 			*outputPtr += 2;
 		}
@@ -169,7 +170,6 @@ int assembleLine(char *line, unsigned char *output,
 
 int insertJumpAddresses(unsigned char *output, int logLevel){
 
-	//return 0;
 	int returnValue = 0;
 
 	int len = (jumpAddrInsLocsIndex-1)*2;
@@ -179,9 +179,9 @@ int insertJumpAddresses(unsigned char *output, int logLevel){
 		printf("numJumpLocs: %d\n", numJumpToLocs);
 	}
 	for(int i = 0; i < len; i+=2){
-		char *jName = jumpAddrInsLocs[i+1];
+		char *jName = (char*) jumpAddrInsLocs[i+1];
 		for(int j = 0; j < len2; j+=2){
-			if(strcmp(jName, jumpToLocs[j]) == 0){
+			if(strcmp(jName, (char*) jumpToLocs[j]) == 0){
 				if(logLevel >= 2)
 					printf("inserting jumpAddr\n");
 				//get outputAddress to write to
@@ -237,7 +237,7 @@ int assembleFile(char *inputFilename, char *outputFilename, int logLevel){
 
 
 
-	unsigned char line[256];
+	char line[256];
 	int lineNum = 0;
 	bool writeToFile = true;
 	unsigned char *outputPtr = output;//which part of output to write to
@@ -257,12 +257,12 @@ int assembleFile(char *inputFilename, char *outputFilename, int logLevel){
 
 		outputOffset = (unsigned short) (outputPtr - outputPtr0);
 
-		fgets(line, 255, inputFile);
+		char *checkPtr = fgets(line, 255, inputFile);
 		if(logLevel >= 2)
-			printf("\n\nline: %s", line);
+			printf("\nline: %s", line);
 
 		//reached EOF
-		if(feof(inputFile)){
+		if(feof(inputFile) || checkPtr == NULL){
 			if(lineNum == 0){
 				printf("Given inputfile is (effectively) empty. Nothing to asm.\n");
 				return ERROR_EMPTY_INPUTFILE;
@@ -292,7 +292,7 @@ int assembleFile(char *inputFilename, char *outputFilename, int logLevel){
 
 		//"remove" comments
 		if(line != 0){
-			unsigned char *commentPos = strchr(line, '/');
+			unsigned char *commentPos = (unsigned char *) strchr(line, '/');
 			if(commentPos != 0){
 				*commentPos = '\0';
 			}
@@ -306,7 +306,7 @@ int assembleFile(char *inputFilename, char *outputFilename, int logLevel){
 			if(nPos != 0)
 				*nPos = '\0';
 			//copy jump name
-			strcpy(jumpToLocs[jumpLocsIndex], line);
+			strcpy((char*) jumpToLocs[jumpLocsIndex], line);
 			//copy addr
 			jumpToLocs[jumpLocsIndex+1][0] = (unsigned char) ((outputOffset&0xFF00)>>8);
 			jumpToLocs[jumpLocsIndex+1][1] = (unsigned char) (outputOffset&0x00FF);
