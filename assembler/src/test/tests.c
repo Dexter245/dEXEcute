@@ -12,11 +12,11 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "constants.h"
+#include "../constants.h"
 #include "tests.h"
-#include "assembler.h"
+#include "../assembler.h"
 
-void runTests(bool lineTests, bool fileTests, int logLevel){
+int runTests(bool lineTests, bool fileTests, int logLevel){
 
 	if(lineTests){
 		runLineTests(logLevel);
@@ -24,6 +24,8 @@ void runTests(bool lineTests, bool fileTests, int logLevel){
 	if(fileTests){
 		runFileTests(logLevel);
 	}
+
+	return 500;//TODO
 
 }
 

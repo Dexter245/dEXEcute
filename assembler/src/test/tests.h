@@ -10,7 +10,7 @@
 #ifndef TESTS_H_
 #define TESTS_H_
 
-void runTests(bool lineTests, bool fileTests,
+int runTests(bool lineTests, bool fileTests,
 		int logLevel);
 void runLineTests(int logLevel);
 void runFileTests(int logLevel);

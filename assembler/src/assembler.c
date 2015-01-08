@@ -16,7 +16,6 @@
 #include "assembler.h"
 #include "constants.h"
 #include "utils.h"
-#include "tests.h"
 
 int assembleLine(char *line, unsigned char *output,
 		unsigned char **outputPtr, int lineNum, int logLevel){

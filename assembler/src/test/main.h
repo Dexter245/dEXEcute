@@ -10,8 +10,10 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-
-
+//command line arguments
+extern const char CMD_ARG_LOGLEVEL[];
+extern const char CMD_ARG_LINE_TESTS[];
+extern const char CMD_ARG_FILE_TESTS[];
 
 
 #endif /* MAIN_H_ */
