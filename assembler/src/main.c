@@ -18,11 +18,14 @@
 #include "utils.h"
 #include "assembler.h"
 
+const char CMD_ARG_LOGLEVEL[] = "-l";
+
 int main(int argc, char *argv[]) {
 
 	int returnValue = 0;
 	char *inputFilename;
 	char *outputFilename;
+	int logLevel = 1;
 
 	if(argc < 2){
 		printf("No input file given. Nothing to assemble.\n");
@@ -36,10 +39,17 @@ int main(int argc, char *argv[]) {
 					DEFAULT_OUTPUT_FILENAME);
 			outputFilename = DEFAULT_OUTPUT_FILENAME;
 		}
-		else
+		else{
 			outputFilename = argv[2];
+			if(argc >= 5){
+				if(strcmp(argv[3], CMD_ARG_LOGLEVEL) == 0){
+					logLevel = atoi(argv[4]);
+				}
+			}
+		}
 
-		returnValue = assembleFile(inputFilename, outputFilename, 2);
+		returnValue = assembleFile(inputFilename,
+				outputFilename, logLevel);
 
 
 
