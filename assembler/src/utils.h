@@ -28,6 +28,7 @@ bool isArgLit(char *arg);
 bool isArgJumpLit(char *arg);
 bool hasArgLitError(bool arg0Lit, bool arg1Lit, bool arg2Lit,
 		char *arg0, char *arg1, char *arg2);
+bool doesJumpToLocExist(char *jName);
 
 
 #endif /* UTILS_H_ */

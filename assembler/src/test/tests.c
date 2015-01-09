@@ -16,7 +16,9 @@
 #include "tests.h"
 #include "../assembler.h"
 
-int runTests(bool lineTests, bool fileTests, int logLevel){
+const int NUM_FILE_TESTS = 4;
+
+void runTests(bool lineTests, bool fileTests, int logLevel){
 
 	if(lineTests){
 		runLineTests(logLevel);
@@ -24,8 +26,6 @@ int runTests(bool lineTests, bool fileTests, int logLevel){
 	if(fileTests){
 		runFileTests(logLevel);
 	}
-
-	return 500;//TODO
 
 }
 
@@ -179,13 +179,18 @@ int cmpOutFiles(char *filenameExpected, char *filenameWritten,
 
 void runFileTests(int logLevel){
 
-	printf("\nstarting fileTests.\n");
+	if(logLevel >= 2)
+		printf("\nstarting fileTests.\n");
 
-	int numFileTests = 1;
 	int numFileTestsPassed = 0;
 	int numFileTestsFailed = 0;
 
-	for(int i = 0; i < numFileTests; i++){
+	for(int i = 0; i < NUM_FILE_TESTS; i++){
+
+		if(logLevel >= 2){
+			printf("\n\n\nFiletest %d:\n", i);
+			printf("================\n\n");
+		}
 
 		char inputFilename[256];
 		char outputFilename[256];
@@ -228,7 +233,7 @@ void runFileTests(int logLevel){
 
 	}
 
-	printf("\nNum fileTests: %d\n", numFileTests);
+	printf("\nNum fileTests: %d\n", NUM_FILE_TESTS);
 	printf("Num fileTests passed: %d\n", numFileTestsPassed);
 	printf("Num fileTests failed: %d\n", numFileTestsFailed);
 	printf("\n");

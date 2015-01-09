@@ -21,7 +21,6 @@ const char CMD_ARG_LINE_TESTS[] = "-lt";
 const char CMD_ARG_FILE_TESTS[] = "-ft";
 
 int main(int argc, char *argv[]){
-	int returnValue = 0;
 
 	bool runLineTests = true;
 	bool runFileTests = true;
@@ -40,7 +39,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	returnValue = runTests(runLineTests, runFileTests, logLevel);
+	runTests(runLineTests, runFileTests, logLevel);
 
 
 
@@ -52,7 +51,7 @@ int main(int argc, char *argv[]){
 
 
 
-	return returnValue;
+	return 0;
 }
 
 

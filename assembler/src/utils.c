@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "utils.h"
+#include "assembler.h"
 
 int getRegisterNum(char *regName){
 	for(int i = 0; i < NUM_REGISTERS; i++){
@@ -110,6 +111,15 @@ bool hasArgLitError(bool arg0Lit, bool arg1Lit, bool arg2Lit,
 	return false;
 }
 
+bool doesJumpToLocExist(char *jName){
+	int pos = 1;
+	for(int i = 0; i < numJumpToLocs; i++){
+		if(strcmp(jName, (char *) jumpToLocs[pos]) == 0)
+			return true;
+		pos += 2;
+	}
+	return false;
+}
 
 
 

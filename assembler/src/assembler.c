@@ -87,6 +87,9 @@ int assembleLine(char *line, unsigned char *output,
 	if(isArg1Lit)
 		opcode |= 1;
 
+	if(logLevel >= 3)
+		printf("opcode: %u\n", opcode);
+
 	**outputPtr = opcode;
 	++(*outputPtr);
 
@@ -114,11 +117,16 @@ int assembleLine(char *line, unsigned char *output,
 		else if(isArg0Lit){
 			unsigned int arg0int = atoi(arg0);
 			**outputPtr = (unsigned char) (arg0int>>8);
+			if(logLevel >= 3)
+				printf("arg0Lit: %u ", **outputPtr);
 			++(*outputPtr);
 			//output[outputPtr] = (arg0int<<24)>>24;
 			**outputPtr = (unsigned char) (arg0int & 0x00FF);
+			if(logLevel >= 3)
+				printf("%u\n", **outputPtr);
 			++(*outputPtr);
 		}else{
+
 			int rNum = getRegisterNum(arg0);
 			if(rNum == -1){
 				if(logLevel >= 1)
@@ -126,6 +134,8 @@ int assembleLine(char *line, unsigned char *output,
 				returnValue = -1;
 			}
 			**outputPtr = (unsigned char) (rNum & 0x000000FF);
+			if(logLevel >= 3)
+				printf("arg0: %u\n", **outputPtr);
 			++(*outputPtr);
 		}
 	}
@@ -134,10 +144,14 @@ int assembleLine(char *line, unsigned char *output,
 	if(numArgsNeeded > 1){
 		if(isArg1Lit){
 			unsigned int arg1int = atoi(arg1);
-			**outputPtr = (unsigned char) (arg1int>>24);//24 instead of 8?
+			**outputPtr = (unsigned char) (arg1int>>8);//24 instead of 8?
+			if(logLevel >= 3)
+				printf("arg1Lit: %u ", **outputPtr);
 			++(*outputPtr);
 			//output[outputPtr] = (arg1int<<24)>>24;
 			**outputPtr = (unsigned char) (arg1int & 0x000000FF);
+			if(logLevel >= 3)
+				printf("%u\n", **outputPtr);
 			++(*outputPtr);
 		}else{
 			int rNum = getRegisterNum(arg1);
@@ -147,6 +161,8 @@ int assembleLine(char *line, unsigned char *output,
 				returnValue = -1;
 			}
 			**outputPtr = (unsigned char) (rNum & 0x000000FF);
+			if(logLevel >= 3)
+				printf("arg1: %u\n", **outputPtr);
 			++(*outputPtr);
 		}
 	}
@@ -161,6 +177,8 @@ int assembleLine(char *line, unsigned char *output,
 			returnValue = -1;
 		}
 		**outputPtr = (unsigned char) (rNum & 0x000000FF);
+		if(logLevel >= 3)
+			printf("arg2: %u\n", **outputPtr);
 		++(*outputPtr);
 	}
 
@@ -305,6 +323,9 @@ int assembleFile(char *inputFilename, char *outputFilename, int logLevel){
 			char *nPos = strchr(line, '\n');
 			if(nPos != 0)
 				*nPos = '\0';
+			//check if jumpToName already exists
+			if(doesJumpToLocExist(line))
+				continue;
 			//copy jump name
 			strcpy((char*) jumpToLocs[jumpLocsIndex], line);
 			//copy addr

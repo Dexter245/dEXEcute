@@ -12,7 +12,9 @@
 
 #include <stdbool.h>
 
-int runTests(bool lineTests, bool fileTests,
+extern const int NUM_FILE_TESTS;
+
+void runTests(bool lineTests, bool fileTests,
 		int logLevel);
 void runLineTests(int logLevel);
 void runFileTests(int logLevel);
