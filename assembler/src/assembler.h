@@ -10,22 +10,58 @@
 #ifndef ASSEMBLER_H_
 #define ASSEMBLER_H_
 
-unsigned char jumpToLocs[256][64];//locations in code
-	//where jumping to is possible
-unsigned char jumpAddrInsLocs[256][64];//locations in
-	//code where the destination addr of the jump
-	//needs to be inserted
-int jumpAddrInsLocsIndex;
-int numJumpToLocs;
-unsigned short outputOffset;
+#include <string>
+#include <vector>
+#include <map>
 
-int assembleLine(char *line, unsigned char *output,
-		unsigned char **outputPtr, int lineNum,
-		int logLevel);
-int assembleFile(char *inFilename, char *outFilename,
-		int logLevel);
-int insertJumpAddresses(unsigned char *output,
-		int logLevel);
+class Assembler{
+
+    public:
+
+        Assembler(int logLevel);
+        bool assembleLine(std::string line,
+               std::vector<unsigned char> &output);
+        bool assembleFile(const std::string &inFilename,
+                const std::string &outFilename);
 
 
-#endif /* ASSEMBLER_H_ */
+
+    private:
+
+        //locations in code where jumping to is possible
+        std::map<std::string, unsigned short> jumpToLocs;
+        //locations in code where the destination addr of
+        //the jump needs to be inserted
+        std::map<std::string, std::vector<unsigned short> > jumpAddrInsLocs;
+        int bytesWritten;
+        int logLevel;
+        int lineNum;
+
+        struct Args{
+            std::string arg0;
+            std::string arg1;
+            std::string arg2;
+        } args_;
+
+        bool insertJumpAddresses(std::vector<unsigned char> &output);
+        void addJumpAddrInsLoc(std::string &jName, unsigned short addr);
+
+        int getRegisterNum(const std::string &regName);
+        int getOpcodeNum(const std::string &opName);
+        bool hasArgNumError(int numArgsNeeded, Args &args);
+        int getNumArgs(Args &args);
+        bool isArgLit(const std::string &arg);
+        bool isArgJumpLit(const std::string &arg);
+        bool hasArgLitError(const bool argsLit[3], Args &args);
+        bool doesJumpToLocExist(const std::string jName);
+
+
+        void printErrorHeader();
+        void printLiteralError();
+        void printUnknownRegisterError(std::string &_register);
+        void printUnknownInstructionError(std::string &instruction);
+        void printNumArgsError(int expected, int found);
+
+};
+
+#endif

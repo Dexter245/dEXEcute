@@ -1,5 +1,5 @@
 /*
- * main.h
+ * main_test.h
  * This file is part of the dEXEcute project
  *
  * Author: Lajos Ambrus
@@ -7,12 +7,14 @@
  * Copyright (c) 2014-2015 Lajos Ambrus
  */
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef MAIN_TEST_H_
+#define MAIN_TEST_H_
 
 #include <string>
 
+//command line arguments
 extern const std::string CMD_ARG_LOGLEVEL;
+extern const std::string CMD_ARG_LINE_TESTS;
+extern const std::string CMD_ARG_FILE_TESTS;
 
 #endif
-
