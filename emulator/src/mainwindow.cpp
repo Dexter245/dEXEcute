@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "../../assembler/src/dconst.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
@@ -11,35 +12,26 @@ MainWindow::MainWindow(QWidget *parent) :
     createRomArea();
     createLogArea();
 
-//    QVBoxLayout *scrollLayout = new QVBoxLayout();
 
-    mainLayout = new QVBoxLayout();
-    mainLayout->addWidget(settingsBox);
-    mainLayout->addWidget(controlBox);
-    mainLayout->addWidget(infoBox);
-    mainLayout->addWidget(registerBox);
-    mainLayout->addWidget(ramBox);
-    mainLayout->addWidget(romBox);
-    mainLayout->addWidget(logBox);
 
-    //mainScrollArea = new QScrollArea();
-    //mainScrollArea->setLayout(mainLayout);
-    //mainScrollArea->setWidget(this);
+    mainLeftLayout = new QVBoxLayout();
+    mainLeftLayout->addWidget(settingsBox);
+    mainLeftLayout->addWidget(controlBox);
+    mainLeftLayout->addWidget(infoBox);
+    mainLeftLayout->addWidget(registerBox);
 
-    //scrollLayout->addWidget(mainScrollArea);
-    //mainScrollArea.setWidget(mainLayout);
+    mainRightLayout = new QVBoxLayout();
+    mainRightLayout ->addWidget(ramBox);
+    mainRightLayout ->addWidget(romBox);
+    mainRightLayout ->addWidget(logBox);
 
-    //setLayout(scrollLayout);
+    mainLayout = new QHBoxLayout();
+    mainLayout->addItem(mainLeftLayout);
+    mainLayout->addItem(mainRightLayout);
+
+
     setLayout(mainLayout);
 
-    //ram rom und log nach rechts seitlich
-
-    //mainScrollArea = new QScrollArea();
-    //mainScrollArea->setWidget(registerBox);
-    //mainScrollArea->show();
-
-    //setLayout(mainScrollArea);
-    //addWidget(mainScrollArea);
 
 }
 
@@ -117,11 +109,11 @@ void MainWindow::createRegisterArea(){
     //QHBoxLayout *hLayout1 = new QHBoxLayout();
 
 
-    for(int i = 0; i < NUM_REGISTERS; i++){
+    for(int i = 0; i < dconst::NUM_REGISTERS; i++){
 
         //auto newVec = std::vector<QLabel*>();
         std::vector<QLabel*> newVec;
-        QLabel *qLab = new QLabel(QString::fromStdString(reg_names[i]));
+        QLabel *qLab = new QLabel(QString::fromStdString(dconst::registers[i]));
         newVec.push_back(qLab);
         newVec.push_back(new QLabel("65535"));
         newVec.push_back(new QLabel("FF"));

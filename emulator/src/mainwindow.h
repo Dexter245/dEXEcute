@@ -13,10 +13,6 @@
 #include <QLabel>
 #include <QTextEdit>
 
-//class QGroupBox;
-//class QCheckBox;
-//class QSpinBox;
-//class QLineEdit;
 
 class MainWindow : public QWidget
 {
@@ -35,8 +31,10 @@ private:
     void createRomArea();
     void createLogArea();
 
-    QVBoxLayout *mainLayout;
-    QScrollArea *mainScrollArea;
+    QHBoxLayout *mainLayout;
+    QVBoxLayout *mainLeftLayout;
+    QVBoxLayout *mainRightLayout;
+
 
     //settings widgets
     QGroupBox *settingsBox;
@@ -83,10 +81,6 @@ private:
 
 
 
-    //TODO use dconst once merged!
-    const int NUM_REGISTERS = 16;
-    const std::string reg_names[16] = {"r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7",
-        "l0", "l1", "sr", "ip", "ir", "rp0", "rp1", "-"};
 
 };
 

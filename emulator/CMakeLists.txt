@@ -15,6 +15,7 @@ find_package(Qt5Widgets)
 set(SOURCE_FILES_EMULATOR
     src/main.cpp
     src/mainwindow.cpp
+    ../assembler/src/dconst.cpp
     )
 
 add_executable(emulator ${SOURCE_FILES_EMULATOR})
