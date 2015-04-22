@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include <QBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
@@ -9,15 +8,38 @@ MainWindow::MainWindow(QWidget *parent) :
     createInfoArea();
     createRegisterArea();
     createRamArea();
+    createRomArea();
+    createLogArea();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout();
+//    QVBoxLayout *scrollLayout = new QVBoxLayout();
+
+    mainLayout = new QVBoxLayout();
     mainLayout->addWidget(settingsBox);
     mainLayout->addWidget(controlBox);
     mainLayout->addWidget(infoBox);
     mainLayout->addWidget(registerBox);
     mainLayout->addWidget(ramBox);
+    mainLayout->addWidget(romBox);
+    mainLayout->addWidget(logBox);
 
+    //mainScrollArea = new QScrollArea();
+    //mainScrollArea->setLayout(mainLayout);
+    //mainScrollArea->setWidget(this);
+
+    //scrollLayout->addWidget(mainScrollArea);
+    //mainScrollArea.setWidget(mainLayout);
+
+    //setLayout(scrollLayout);
     setLayout(mainLayout);
+
+    //ram rom und log nach rechts seitlich
+
+    //mainScrollArea = new QScrollArea();
+    //mainScrollArea->setWidget(registerBox);
+    //mainScrollArea->show();
+
+    //setLayout(mainScrollArea);
+    //addWidget(mainScrollArea);
 
 }
 
@@ -161,8 +183,45 @@ void MainWindow::createRamArea(){
 
     ramBox->setLayout(gridLayout);
 
+}
 
+void MainWindow::createRomArea(){
 
+    romBox = new QGroupBox("ROM");
+
+    QGridLayout *gridLayout = new QGridLayout();
+
+    //create widgets
+    rom_showingAddr = new QLabel("Showing Address: 123");
+    QLabel *rom_gotoAddrLabel = new QLabel("Goto Address: ");
+    rom_gotoAddr = new QLineEdit();
+    rom_gotoAddrButton = new QPushButton("Go");
+    rom_romDisplay = new QTextEdit("asdf");
+
+    //add widgets
+    gridLayout->addWidget(rom_showingAddr, 0, 0);
+    gridLayout->addWidget(rom_gotoAddrLabel, 0, 1);
+    gridLayout->addWidget(rom_gotoAddr, 0, 2);
+    gridLayout->addWidget(rom_gotoAddrButton, 0, 3);
+    gridLayout->addWidget(rom_romDisplay, 1, 0, 1, 4);
+
+    romBox->setLayout(gridLayout);
+
+}
+
+void MainWindow::createLogArea(){
+
+    logBox = new QGroupBox("Log");
+
+    QGridLayout *gridLayout = new QGridLayout();
+
+    //create widgets
+    log_logDisplay = new QTextEdit("log comes here");
+
+    //add widgets
+    gridLayout->addWidget(log_logDisplay);
+
+    logBox->setLayout(gridLayout);
 
 }
 

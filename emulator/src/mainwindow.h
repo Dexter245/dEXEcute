@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <QBoxLayout>
+#include <QScrollArea>
 #include <QGroupBox>
 #include <QCheckBox>
 #include <QSpinBox>
@@ -30,6 +32,11 @@ private:
     void createInfoArea();
     void createRegisterArea();
     void createRamArea();
+    void createRomArea();
+    void createLogArea();
+
+    QVBoxLayout *mainLayout;
+    QScrollArea *mainScrollArea;
 
     //settings widgets
     QGroupBox *settingsBox;
@@ -62,6 +69,18 @@ private:
     QLineEdit *ram_gotoAddr;
     QPushButton *ram_gotoAddrButton;
     QTextEdit *ram_ramDisplay;
+
+    //rom widgets
+    QGroupBox *romBox;
+    QLabel *rom_showingAddr;
+    QLineEdit *rom_gotoAddr;
+    QPushButton *rom_gotoAddrButton;
+    QTextEdit *rom_romDisplay;
+
+    //log widgets
+    QGroupBox *logBox;
+    QTextEdit *log_logDisplay;
+
 
 
     //TODO use dconst once merged!
